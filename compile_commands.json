@@ -1,0 +1,107 @@
+[
+ {
+  "directory": "C:\\Users\\Anis\\Downloads\\HW3-main\\HW3-main - Copy",
+  "arguments": [
+   "g++",
+   "-std=c++17",
+   "-O2",
+   "-Wall",
+   "-g",
+   "-c",
+   "problem.cpp",
+   "-o",
+   "problem.o"
+  ],
+  "file": "problem.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Anis\\Downloads\\HW3-main\\HW3-main - Copy",
+  "arguments": [
+   "g++",
+   "-std=c++17",
+   "-O2",
+   "-Wall",
+   "-g",
+   "-c",
+   "tex_problem_bank_parser.cpp",
+   "-o",
+   "tex_problem_bank_parser.o"
+  ],
+  "file": "tex_problem_bank_parser.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Anis\\Downloads\\HW3-main\\HW3-main - Copy",
+  "arguments": [
+   "g++",
+   "-std=c++17",
+   "-O2",
+   "-Wall",
+   "-g",
+   "-c",
+   "ShuffleSelector.cpp",
+   "-o",
+   "ShuffleSelector.o"
+  ],
+  "file": "ShuffleSelector.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Anis\\Downloads\\HW3-main\\HW3-main - Copy",
+  "arguments": [
+   "g++",
+   "-std=c++17",
+   "-O2",
+   "-Wall",
+   "-g",
+   "-c",
+   "simple_test_generator.cpp",
+   "-o",
+   "simple_test_generator.o"
+  ],
+  "file": "simple_test_generator.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Anis\\Downloads\\HW3-main\\HW3-main - Copy",
+  "arguments": [
+   "g++",
+   "-std=c++17",
+   "-O2",
+   "-Wall",
+   "-g",
+   "-c",
+   "SimpleTestWriter.cpp",
+   "-o",
+   "SimpleTestWriter.o"
+  ],
+  "file": "SimpleTestWriter.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Anis\\Downloads\\HW3-main\\HW3-main - Copy",
+  "arguments": [
+   "g++",
+   "-std=c++17",
+   "-O2",
+   "-Wall",
+   "-g",
+   "-c",
+   "fancy_test_generator.cpp",
+   "-o",
+   "fancy_test_generator.o"
+  ],
+  "file": "fancy_test_generator.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Anis\\Downloads\\HW3-main\\HW3-main - Copy",
+  "arguments": [
+   "g++",
+   "-std=c++17",
+   "-O2",
+   "-Wall",
+   "-g",
+   "-c",
+   "FancyTestWriter.cpp",
+   "-o",
+   "FancyTestWriter.o"
+  ],
+  "file": "FancyTestWriter.cpp"
+ }
+]

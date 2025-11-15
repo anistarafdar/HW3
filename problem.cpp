@@ -7,8 +7,8 @@
 // Split the string <s> at every occurence of the delimiter <del>.
 std::vector<std::string> split(std::string s, std::string del) {
     std::vector<std::string> v;
-    int start = 0;
-    for (int end = s.find(del, start); end != std::string::npos; end = s.find(del, start)) {
+    size_t start = 0;
+    for (size_t end = s.find(del, start); end != std::string::npos; end = s.find(del, start)) {
         v.push_back(s.substr(start, end - start));
         start = end + del.size();
     }
@@ -19,10 +19,10 @@ std::vector<std::string> split(std::string s, std::string del) {
 std::string FORMAT = "^([\\s\\S]*)\\\\answer\\{([\\s\\S]*)\\}[\\s\\S]*\\\\topic\\{(.*)\\}[\\s\\S]*\\\\difficulty\\{(.*)\\}";
 std::regex re(FORMAT);
 
-std::string Problem::getQuestion() {return question;}
-std::string Problem::getAnswer() {return answer;}
-std::string Problem::getTopic() {return topic;}
-int Problem::getDifficulty() {return difficulty;}
+std::string Problem::getQuestion() const { return question; }
+std::string Problem::getAnswer() const { return answer; }
+std::string Problem::getTopic() const { return topic; }
+int Problem::getDifficulty() const { return difficulty; }
 
 Problem::Problem(std::string rawProblem) {
     std::smatch match;
@@ -35,6 +35,7 @@ Problem::Problem(std::string rawProblem) {
     topic = match.str(3);
     difficulty = std::stoi(match.str(4));
 }
+/*
 std::vector<Problem> Problem::problemList(std::string filename) {
     // Read problems from file
     std::ifstream file(filename);
@@ -58,3 +59,4 @@ std::vector<Problem> Problem::problemList(std::string filename) {
     }
     return problems;
 }
+    */

@@ -1,0 +1,41 @@
+
+FancyTestWriter.cpp:45:16: style: Variable 'problem' can be declared as reference to const [constVariableReference]
+    for (auto& problem : problems) {
+               ^
+ShuffleSelector.cpp:18:20: style: Variable 'c' can be declared as reference to const [constVariableReference]
+        for (auto& c : constraints) {
+                   ^
+constraint.h:33:23: style: Variable 'prob' can be declared as pointer to const [constVariablePointer]
+            if (auto* prob = dynamic_cast<Problem*>(p.get())) {
+                      ^
+constraint.h:58:23: style: Variable 'prob' can be declared as pointer to const [constVariablePointer]
+            if (auto* prob = dynamic_cast<Problem*>(p.get())) {
+                      ^
+constraint.h:39:9: style: Consider using std::all_of or std::none_of algorithm instead of a raw loop. [useStlAlgorithm]
+        for (const auto& kv : counts) {
+        ^
+ShuffleSelector.cpp:19:40: style: Consider using std::any_of algorithm instead of a raw loop. [useStlAlgorithm]
+            if (!c->isSatisfied(test)) {
+                                       ^
+SimpleTestWriter.cpp:52:16: style: Variable 'problem' can be declared as reference to const [constVariableReference]
+    for (auto& problem : problems) {
+               ^
+problem.h:12:17: performance: Function 'getTopic()' should return member 'topic' by const reference. [returnByReference]
+    std::string getTopic() const;
+                ^
+problem.cpp:8:44: performance: Function parameter 's' should be passed by const reference. [passedByValue]
+std::vector<std::string> split(std::string s, std::string del) {
+                                           ^
+tex_problem_bank_parser.cpp:69:12: style: The scope of the variable 'next_pos' can be reduced. [variableScope]
+    size_t next_pos = 0;
+           ^
+tex_problem_bank_parser.cpp:69:21: style: Variable 'next_pos' is assigned a value that is never used. [unreadVariable]
+    size_t next_pos = 0;
+                    ^
+problem.cpp:8:26: style: The function 'split' is never used. [unusedFunction]
+std::vector<std::string> split(std::string s, std::string del) {
+                         ^
+nofile:0:0: information: Active checkers: 169/966 (use --checkers-report=<filename> to see details) [checkersReport]
+
+
+FIX LATER 

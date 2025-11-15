@@ -3,20 +3,25 @@
 
 #include <string>
 #include <vector>
+#include "IProblem.h"
 
-class Problem {
+class Problem : public IProblem {
 public:
-    std::string getQuestion();
-    std::string getAnswer();
-    std::string getTopic();
-    int getDifficulty();
-    Problem(std::string rawProblem);
-    static std::vector<Problem> problemList(std::string filename);
+    std::string getQuestion() const override;
+    std::string getAnswer()   const override;
+    std::string getTopic() const;
+    int getDifficulty() const;
+
+    explicit Problem(std::string rawProblem);
+
+    // static std::vector<Problem> problemList(std::string filename);
+
 private:
     std::string question;
     std::string answer;
     std::string topic;
     int difficulty;
+    
 };
 
 #endif

@@ -6,7 +6,14 @@
 #include <map>
 #include <set>
 #include "problem.h"
-
+#include "IProblem.h"
+#include "tex_problem_bank_parser.h"
+#include "constraint.h"
+#include <memory> //trying to use smart pointers for future profingh
+#include "IProblemSelector.h" 
+#include "ShuffleSelector.h"  
+#include "ITestWriter.h"      
+#include "SimpleTestWriter.h" 
 // ****************************************************************************
 // Configuration details
 
@@ -30,8 +37,10 @@ int MAX_DIFFICULTY = 75; // in the problem bank) must be 65-75.
 std::string TEX_HEADER = "simple_tex_header.tex";
 std::string CONTENT_HEADER = "simple_content_header.tex";
 
-// ****************************************************************************
+// create constants
 
+// ****************************************************************************
+/*
 // Check whether a proposed test is valid according to the above constraints.
 bool valid(std::vector<Problem> test, std::set<std::string> topics) {
     // Initialize metrics
@@ -81,14 +90,55 @@ std::vector<Problem> testProblems(std::vector<Problem> bank) {
         }
     }
 }
+*/
 
 int main() {
     // Read in problem list and convert to Problem objects
-    std::vector<Problem> bank = Problem::problemList(BANK);
+    //std::vector<Problem> bank = Problem::problemList(BANK);
+
+    
+    TexProblemBankParser parser;
+    ShuffleSelector selector;
+    SimpleTestWriter writer;
+    //auto bank = parser.parse(BANK);
+    std::vector<std::shared_ptr<IProblem>> bank = parser.parse(BANK);
+
+    
+    // got problems?
+    if (bank.size() < static_cast<size_t>(NUM_PROBLEMS)) {
+        std::cerr << "Not enough problems in bank (" << bank.size()
+                << ") to pick " << NUM_PROBLEMS << ".\n";
+        return 1;
+    }
+
+    // build topic list from bank
+    std::set<std::string> topicSet;
+    for (const auto& p : bank) {
+        if (const auto* pr = dynamic_cast<const Problem*>(p.get())) {
+            topicSet.insert(pr->getTopic());
+        }
+    }
+    std::vector<std::string> allTopics(topicSet.begin(), topicSet.end());
+
+    ///constraiiinst
+    std::vector<std::shared_ptr<Constraint>> constraints;
+    constraints.push_back(std::make_shared<TopicConstraint>(MIN_TOPIC, MAX_TOPIC, allTopics));
+    constraints.push_back(std::make_shared<DifficultyConstraint>(MIN_DIFFICULTY, MAX_DIFFICULTY));
+
+
 
     // Generate the test problems
-    std::vector<Problem> test = testProblems(bank);
+    //std::vector<Problem> test = testProblems(bank);
 
+    // ok this might sound crazy but i think it makes more sense to put the logic here for now (until it seems needed to make its own class file)
+    // this selection algoritm is kinda part of the generators job. i think it might be "tidier" to move it to another class if i plan to use MUltIPLE selection algorithms without touching the generator
+    // but i cant imagine how a math prof would really need this part of the spec to ever change, the way it does it now seems like the best way. agian, i hope this executive decision doesnt bite me in the ass
+    // but if it does, its no big deal to move it in the future/
+    // for now lets keep it simple and try to avoid over engineering where it probly isnt needed....., i dont antipciate big changes in selection logic.
+
+    std::vector<std::shared_ptr<IProblem>> test = 
+        selector.select(bank, constraints, NUM_PROBLEMS);
+    /*
     // Open the file to write the test to
     std::ofstream outputFile(FILENAME); 
     if (!outputFile.is_open()) {
@@ -102,11 +152,14 @@ int main() {
     outputFile << "\\input{" << CONTENT_HEADER << "}\n";
 
     // Write the problems to the file
-    for (Problem problem : test) {
-        outputFile << "\\item " << problem.getQuestion() << "\n";
+    //for (Problem problem : test) {
+    for (auto& problem : test) {
+        outputFile << "\\item " << problem->getQuestion() << "\n";
     }
 
     // End the file
     outputFile << "\\end{enumerate}\n\\end{document}";
     outputFile.close();
+    */
+    writer.writeTest(FILENAME, test);
 }
