@@ -4,9 +4,11 @@
 #include <vector>
 #include <memory>
 #include <map>
+#include <algorithm>
 #include <string>
 #include "IProblem.h"
 #include "problem.h" // keep to use dynamic_cast to concrete Problem
+#include "MathProblem.h" //3b change
 
 // Base 
 class Constraint {
@@ -29,11 +31,20 @@ class TopicConstraint : public Constraint {
         std::map<std::string, int> counts;
         for (const auto& t : allTopics) counts[t] = 0;
 
-        for (auto& p : problems) {
-            if (auto* prob = dynamic_cast<Problem*>(p.get())) {
-                auto t = prob->getTopic();
-                if (counts.find(t) != counts.end()) counts[t]++;
+        for (auto& p : problems) { //3b change
+            std::string t;
+
+            // used in 3B
+            if (const auto* mathProb = dynamic_cast<const MathProblem*>(p.get())) {
+                t = mathProb->getTopic();
+            // hacky backcompat, would refactor this before this becomes tech debt -used in 3A)
+            } else if (const auto* oldProb = dynamic_cast<const Problem*>(p.get())) {
+                t = oldProb->getTopic();
+            } else {
+                continue; // unknown problem type
             }
+            
+            if (counts.find(t) != counts.end()) counts[t]++;
         }
 
         for (const auto& kv : counts) {
@@ -54,10 +65,20 @@ public:
 
     bool isSatisfied(const std::vector<std::shared_ptr<IProblem>>& problems) const override {
         int total = 0;
-        for (auto& p : problems) {
-            if (auto* prob = dynamic_cast<Problem*>(p.get())) {
-                total += prob->getDifficulty();
+        for (auto& p : problems) { //3b change, technically broken cuz of lack of forward thinking
+            int difficulty = 0;
+
+            // dummy unless implemnted later
+            if (const auto* mathProb = dynamic_cast<const MathProblem*>(p.get())) {
+                // call mathProb->getDifficulty() here if MathProblem implements it, defualt to 0
+                difficulty = 0; //3B problems dont use this constraint
             }
+            // 3a code
+            else if (const auto* oldProb = dynamic_cast<const Problem*>(p.get())) {
+                difficulty = oldProb->getDifficulty();
+            }
+            
+            total += difficulty;
         }
         return total >= minDifficulty && total <= maxDifficulty;
     }
